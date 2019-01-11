@@ -1,0 +1,45 @@
+#
+# Copyright (c) Zhou Peng <p@ctriple.cn>
+#
+
+# We provide 3 different kinds of replicas storageclass:
+#
+# StorageClass  |    Replicas
+# --------------+------------
+# ha-low        |      2
+# ha-middle     |      3
+# ha-high       |      4
+#
+# The valid replicas is within range [2, 5], much more replicas does not make
+# too much sense since 5 replicas will make other things be the first class
+# outage.
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ha-low
+provisioner: ctriple.cn/drbd
+parameters:
+  replicas: "2"
+  fstype: "ext4"
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ha-middle
+provisioner: ctriple.cn/drbd
+parameters:
+  replicas: "3"
+  fstype: "ext4"
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ha-high
+provisioner: ctriple.cn/drbd
+parameters:
+  replicas: "4"
+  fstype: "ext4"

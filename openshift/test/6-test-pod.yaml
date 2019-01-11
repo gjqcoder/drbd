@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-testing
+  namespace: ctriple-drbd
+spec:
+  containers:
+    - name: pvc-testing
+      image: alpine:3.8
+      command: [sh]
+      args: ["-c", "while true; do sleep 10; done"]
+      volumeMounts:
+        - name: pvc-1g
+          mountPath: /data
+      ports:
+        - containerPort: 80
+  volumes:
+    - name: pvc-1g
+      persistentVolumeClaim:
+        claimName: pvc-1g-low

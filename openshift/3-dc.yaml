@@ -1,0 +1,47 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: stor
+  namespace: ctriple-drbd
+  labels:
+    app: stor
+spec:
+  replicas: 1
+  selector:
+    app: stor
+  template:
+    metadata:
+      labels:
+        app: stor
+    spec:
+      serviceAccount: drbd
+      restartPolicy: Always
+      containers:
+        - name: stor
+          image: ctriple/drbd:latest
+          command: ["/stor"]
+          env:
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: MY_POD_SERVICEACCOUNT
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.serviceAccountName
+            # FIXME: It's sad that downward api does not support passing image
+            # name into container, so i have to hard coded the image name here.
+            - name: MY_POD_IMAGE
+              value: ctriple/drbd:latest
+          volumeMounts:
+            - mountPath: /lib
+              name: host-lib
+            - mountPath: /lib64
+              name: host-lib64
+      volumes:
+        - name: host-lib
+          hostPath:
+            path: /lib
+        - name: host-lib64
+          hostPath:
+            path: /lib64

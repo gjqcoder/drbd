@@ -1,0 +1,14 @@
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  name: ctriple-drbd
+  annotations:
+    openshift.io/description: ""
+    openshift.io/display-name: ""
+    openshift.io/node-selector: ""
+spec:
+  finalizers:
+    - openshift.io/origin
+    - kubernetes
+status:
+  phase: Active

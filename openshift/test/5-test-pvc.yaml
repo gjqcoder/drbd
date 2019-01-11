@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-1g-low
+  namespace: ctriple-drbd
+  annotations:
+    volume.beta.kubernetes.io/storage-class: ha-low
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-1g-middle
+  namespace: ctriple-drbd
+  annotations:
+    volume.beta.kubernetes.io/storage-class: ha-middle
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-1g-high
+  namespace: ctriple-drbd
+  annotations:
+    volume.beta.kubernetes.io/storage-class: ha-high
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
